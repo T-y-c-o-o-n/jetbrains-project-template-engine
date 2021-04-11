@@ -19,6 +19,8 @@ class TemplateService(
 
     fun findAll() = templateRepository.findAll()
 
+    fun find(id: String) = templateRepository.findById(id).get()
+
     fun save(templateDTO: TemplateDTO) {
         templateRepository.save(
             Template(
@@ -31,15 +33,12 @@ class TemplateService(
         )
     }
 
-    fun fillTemplate(templateVariablesDTO: TemplateVariablesDTO): String {
-        val template = templateRepository.findById(templateVariablesDTO.templateId)
-            ?: throw TemplateNotFoundException(
-                "template with id \'" + templateVariablesDTO.templateId
-                        + "\' not found"
-            )
-        var tempTemplate: String = template.get().template
-        for (entry: Map.Entry<String, String> in templateVariablesDTO.variables) {
-            tempTemplate = tempTemplate.replace("$" + entry.key + "$", entry.value)
+    fun fillTemplate(template: Template, templateVariablesDTO: TemplateVariablesDTO): String {
+        var tempTemplate: String = template.template
+        for (map: Map<String, String> in templateVariablesDTO.variables) {
+            for (entry: Map.Entry<String, String> in map) {
+                tempTemplate = tempTemplate.replace("$" + entry.key + "$", entry.value)
+            }
         }
         return tempTemplate
     }
