@@ -11,6 +11,9 @@ import org.springframework.web.client.RestTemplate
 @RequestMapping("api/1/template")
 class TemplateController(private val templateService: TemplateService) {
 
+    @GetMapping
+    fun findAll() = templateService.findAll()
+
     @PostMapping
     fun save(@RequestBody templateDTO: TemplateDTO) {
         templateService.save(templateDTO);

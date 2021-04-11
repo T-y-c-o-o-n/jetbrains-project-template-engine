@@ -7,14 +7,15 @@ import com.jetbrains.project.test.dto.TemplateVariablesDTO
 import com.jetbrains.project.test.exception.TemplateNotFoundException
 import com.jetbrains.project.test.repository.RecipientUrlRepository
 import com.jetbrains.project.test.repository.TemplateRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
 class TemplateService(
-    private val templateRepository: TemplateRepository,
-    private val recipientUrlRepository: RecipientUrlRepository
+        @Autowired private val templateRepository: TemplateRepository,
+        @Autowired private val recipientUrlRepository: RecipientUrlRepository
 ) {
 
     fun findAll() = templateRepository.findAll()
@@ -23,13 +24,13 @@ class TemplateService(
 
     fun save(templateDTO: TemplateDTO) {
         templateRepository.save(
-            Template(
-                templateDTO.templateId,
-                templateDTO.template,
-                templateDTO.recipients
-                    .map { recipientUrlRepository.save(RecipientUrl(0, it)) }
-                    .toMutableList()
-            )
+                Template(
+                        templateDTO.templateId,
+                        templateDTO.template,
+                        templateDTO.recipients
+                                .map { recipientUrlRepository.save(RecipientUrl(0, it)) }
+                                .toMutableList()
+                )
         )
     }
 

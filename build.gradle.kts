@@ -40,6 +40,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 	testImplementation("com.ninja-squad:springmockk:3.0.1")
+	implementation("com.google.code.gson:gson:2.8.5")
 }
 
 tasks.withType<KotlinCompile> {
