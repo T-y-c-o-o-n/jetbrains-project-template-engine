@@ -1,4 +1,3 @@
-package com.jetbrains.project.test.domain
+package com.jetbrains.project.test.dto
 
-class MessageDTO {
-}
+data class MessageDTO(val message: String)
